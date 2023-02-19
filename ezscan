@@ -1,0 +1,8 @@
+#!/bin/bash
+#This is the Mac version of the shortcut
+#Mac has a built in command pbpaste where the linux version we install and use xsel in its place
+sudo touch /tmp/openports.txt
+paste=`pbpaste`
+sudo nmap -sS $paste | grep open | cut -f1 -d "/" | tr '\n' ',' |  sed 's/,$/\n/' > /tmp/openports.txt
+portmap=`cat /tmp/openports.txt`
+sudo nmap -A -p $portmap $paste
